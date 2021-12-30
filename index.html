@@ -10,12 +10,13 @@
 <body>
     <canvas></canvas>
     <img src="./images/earth.png" alt="" class="earth">
-    <div class="earth" id="earth_weapon"></div>
-    <div class="astroid" id="astroid" onclick="blast(this.id)">
+    <div class="earth weapon" id="earth_weapon"></div>
+    <div class="astroid" id="astroid" onclick="destroy(this.id)">
         <img src="./images/astroid.png" alt="">
     </div>
     <audio src="./images/blast-sound.wav"></audio>
-    <script src="index.js"></script>
-    <script src="canvas.js"></script>
+    <script src="./JS/index.js"></script>
+    <script src="./JS/canvas.js"></script>
+    <script src="./JS/rotateWeapon.js"></script>
 </body>
 </html>
