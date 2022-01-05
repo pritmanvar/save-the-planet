@@ -8,15 +8,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas></canvas>
-    <img src="./images/earth.png" alt="" class="earth">
-    <div class="earth weapon" id="earth_weapon"></div>
-    <div class="astroid" id="astroid" onclick="destroy(this.id)">
-        <img src="./images/astroid.png" alt="">
-    </div>
-    <audio src="./images/blast-sound.wav"></audio>
-    <script src="./JS/index.js"></script>
-    <script src="./JS/canvas.js"></script>
-    <script src="./JS/rotateWeapon.js"></script>
+    <main>
+        <canvas></canvas>
+        <img src="./images/earth.png" alt="" class="earth unselectable">
+        <div class="earth weapon unselectable" id="earth_weapon" style="z-index: 1;"></div>
+        <div class="astroid unselectable" id="astroid" onclick="destroy(this.id)">
+            <img src="./images/astroid.png" alt="">
+        </div>
+        <audio src="./images/blast-sound.wav" class="blastSound"></audio>
+        <audio src="./images/fireSound.mp3" class="fire"></audio>
+    
+        <script src="./JS/index.js"></script>
+        <script src="./JS/rotateWeapon.js"></script>
+    </main>
 </body>
 </html>
