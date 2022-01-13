@@ -10,16 +10,11 @@
 <body>
     <main>
         <canvas></canvas>
-        <img src="./images/earth.png" alt="" class="earth unselectable">
-        <div class="earth weapon unselectable" id="earth_weapon" style="z-index: 1;"></div>
-        <div class="astroid unselectable" id="astroid" onclick="destroy(this.id)">
-            <img src="./images/astroid.png" alt="">
-        </div>
+        <img src="./images/blast.gif" alt="" style="position: absolute; display: none; z-index: -1;" id="blastImg">
         <audio src="./images/blast-sound.wav" class="blastSound"></audio>
         <audio src="./images/fireSound.mp3" class="fire"></audio>
     
-        <script src="./JS/index.js"></script>
-        <script src="./JS/rotateWeapon.js"></script>
     </main>
+    <script src="./canvas.js"></script>
 </body>
 </html>

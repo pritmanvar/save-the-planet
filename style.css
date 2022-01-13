@@ -11,74 +11,7 @@ body{
     background-repeat: no-repeat;
     overflow: hidden;
 }
-.earth{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 160px;
-    width: 160px;
-    transform: translate(-50%,-50%);
-    border-radius: 50%;
-    z-index: -1;
-}
-.unselectable{
-    -webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;     /* Firefox all */
-    -ms-user-select: none;      /* IE 10+ */
-    user-select: none;          /* Likely future */ 
-}
-#earth_weapon::before{
-    position: absolute;
-    left: 45px;
-    bottom: 140px;
-    content: "";
-    height: 70px;
-    width: 70px;
-    background: url(./images/weapon.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-.astroid{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 200px;
-    z-index: 1;
-}
-.astroid img{
+main{
     height: 100%;
     width: 100%;
-}
-/* it will add blast animation  */
-.blast::before{
-    position: absolute;
-    content: '';
-    background-image: url(./images/blast.gif);
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 100%;
-    width: 100%;
-}
-.bullet{
-    position: absolute;
-    width: 120px;
-    transform-origin: left;
-    z-index: -1;
-    animation: fire 1s linear 0s 1 forwards;
-}
-.bullet::before{
-    position: absolute;
-    content: "";
-    height: 4px;
-    width: 45px;
-    right: 0%;
-    background-color: white;
-    border-radius: 50%;
-    box-shadow: inset 0 0 3px #0388f4,
-                0 0 10px 5px #0026ff;
-}
-@keyframes fire {
-    100%{
-        width: 100%;
-    }
 }
