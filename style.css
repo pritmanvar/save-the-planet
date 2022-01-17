@@ -13,6 +13,8 @@ body{
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
+    font-family: 'Risque', cursive;
+    letter-spacing: 5px;
 }
 main{
     height: 100%;
@@ -24,7 +26,6 @@ h1{
     left: 50%;
     transform: translate(-50%,-50%);
     color: white;
-    font-weight: 800;
 }
 
 /* CSS for starting page. */
@@ -34,7 +35,6 @@ h1{
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: #FFFFFF50;
     color: #FFFFFF;
 }
 .content{
@@ -46,9 +46,10 @@ h1{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    height: 45%;
+    height: 55%;
     width: 40%;
-    background-color: #00000075;
+    background-color: #00000090;
+    border: 2px solid black;
     border-radius: 20px;
     text-align: center;
 }
@@ -79,8 +80,10 @@ h1{
     min-width: 60px;
     height: 20px;
     color: #000000;
+    font-family: 'Peralta', cursive;
     padding: 5px 10px;
     font-weight: bold;
+    letter-spacing: 5px;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
@@ -93,7 +96,7 @@ h1{
     margin: 5px;
 }
 .option input:checked ~ label span {
-    background: #00000075;
+    background: rgba(0, 0, 0, 0.80);
     color: #FFFFFF
 }
 .start{
@@ -104,17 +107,18 @@ h1{
     height: 40px;
 }
 .startButton:hover{
-    background: #00000075;
+    background: rgba(0, 0, 0, 0.80);
     color: #FFFFFF
 }
 .gameOver{
+    margin: 20px 0;
     display: none;
 }
 .ResetButton{
     display: none;
     min-width: 130px;
     height: 40px;
-    background: #00000075;
+    background: rgba(0, 0, 0, 0.80);
     color: #FFFFFF;
 }
 .ResetButton:hover {
