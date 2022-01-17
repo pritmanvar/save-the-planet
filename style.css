@@ -2,9 +2,12 @@
     margin: 0;
     padding: 0;
 }
+html{
+    cursor: url('./images/cursor.png') 16 16, auto;
+}
 body{
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     background: url(./images/background.webp);
     background-size: cover;
     background-position: center;
@@ -14,4 +17,116 @@ body{
 main{
     height: 100%;
     width: 100%;
+}
+h1{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    font-weight: 800;
+}
+
+/* CSS for starting page. */
+.page{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #FFFFFF50;
+    color: #FFFFFF;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 45%;
+    width: 40%;
+    background-color: #00000075;
+    border-radius: 20px;
+    text-align: center;
+}
+.bulletContainer,.levelContainer{
+    display: flex;
+}
+.option *{
+    cursor: pointer;
+}
+.option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.option:hover img{
+    transform: translateY(3px);
+}
+.page img{
+    height: 30px;
+    width: 30px;
+    margin: 15px;
+}
+.option input:checked ~ label img {
+    border: 3px solid #FFFFFF;
+    border-radius: 20px;
+}
+.btn{
+    min-width: 60px;
+    height: 20px;
+    color: #000000;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #FFFFFF;
+    background: #FFFFFF;
+    text-align: center;
+    margin: 5px;
+}
+.option input:checked ~ label span {
+    background: #00000075;
+    color: #FFFFFF
+}
+.start{
+    display: flex;
+}
+.startButton{
+    width: 130px;
+    height: 40px;
+}
+.startButton:hover{
+    background: #00000075;
+    color: #FFFFFF
+}
+.gameOver{
+    display: none;
+}
+.ResetButton{
+    display: none;
+    min-width: 130px;
+    height: 40px;
+    background: #00000075;
+    color: #FFFFFF;
+}
+.ResetButton:hover {
+    background-color: #FFFFFF;
+    color: black;
+}
+
+@media only screen and (max-width: 750px) {
+    .bulletContainer,.levelContainer{
+        flex-direction: column;
+    }
+    .content{
+        height: 70%;
+    }
 }

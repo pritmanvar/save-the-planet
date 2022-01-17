@@ -7,13 +7,60 @@
     <title>Save The Planet</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body onload="drawEarthWeapon(0)">
     <main>
+        <h1>0</h1>
         <canvas></canvas>
         <img src="./images/blast.gif" alt="" style="position: absolute; display: none; z-index: -1;" id="blastImg">
         <audio src="./images/blast-sound.wav" class="blastSound"></audio>
-        <audio src="./images/fireSound.mp3" class="fire"></audio>
-    
+        <audio src="./images/fireSound.mp3" class="fireSound"></audio>
+        
+        <section class="page">
+            <div class="content">
+                <h2>Select Your Bullet</h2>
+                <div class="bulletContainer">
+                    <div class="option">
+                        <input type="radio" id="bullet1" name="bullets" value="bullet1" checked>
+                        <label for="bullet1"><img src="./images/bullet1.png" alt=""></label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="bullet2" name="bullets" value="bullet2">
+                        <label for="bullet2"><img src="./images/bullet2.png" alt=""></label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="bullet3" name="bullets" value="bullet3">
+                        <label for="bullet3"><img src="./images/bullet3.png" alt=""></label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="bullet4" name="bullets" value="bullet4">
+                        <label for="bullet4"><img src="./images/bullet4.png" alt=""></label>
+                    </div>
+                </div>
+                <h2>Select Level</h2>
+                <div class="levelContainer">
+                    <div class="option">
+                        <input type="radio" id="easy" name="levels" value="2" checked>
+                        <label for="easy"><span class="btn">Easy</span></label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="medium" name="levels" value="5">
+                        <label for="medium"><span class="btn">Medium</span></label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="hard" name="levels" value="10">
+                        <label for="hard"><span class="btn">Hard</span></label>
+                    </div>
+                </div>
+                <div class="gameOver">
+                    <h3>Current Score : </h3>
+                    <h3>Highest Score : </h3>
+                </div>
+                <div class="start">
+                    <button class="btn startButton" onclick="init()">Start</button>
+                    <button class="btn ResetButton" onclick="resetHighScore()">Reset High Score</button>
+                </div>
+            </div>
+        </section>
     </main>
     <script src="./canvas.js"></script>
 </body>

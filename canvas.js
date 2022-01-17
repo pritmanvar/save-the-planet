@@ -2,9 +2,25 @@ let main = document.querySelector("main");
 let blastImg = document.getElementById('blastImg')
 let c = document.querySelector("canvas");
 let ctx = c.getContext("2d"); 
+let page = document.querySelector('.page');
+let gameOver = document.querySelector('.gameOver');
+let resetButton = document.querySelector('.ResetButton');
+let scoreDisplay = document.querySelector('h1');
+let currentScore = 0;
+let highScoreEasy = 0;
+let highScoreMedium = 0;
+let highScoreHard = 0;
 let animationRequest;
 
-const bulletWidth = 54;
+let blastAudio = document.querySelector('.blastSound');
+let fireAudio = document.querySelector('.fireSound');
+
+let earth = new Image();
+earth.src = './images/earth.png';
+let earthSize = 130;
+let weapon = new Image();
+weapon.src = './images/weapon.png'
+
 // set height and width of canvas
 c.height = window.innerHeight;
 c.width = window.innerWidth;
@@ -14,6 +30,27 @@ const y1 = window.innerHeight / 2;
 const x1 = window.innerWidth / 2;
 
 let angle = 0; // angle of weapon
+
+// set highScore in local storage
+highScoreEasy = localStorage.getItem('easy');
+highScoreMedium = localStorage.getItem('medium');
+highScoreHard = localStorage.getItem('hard');
+
+if(highScoreEasy == null){
+    localStorage.setItem('easy','0');
+    highScoreEasy = '0';
+}
+if(highScoreMedium == null){
+    localStorage.setItem('medium','0');
+    highScoreMedium = '0';
+}
+if(highScoreHard == null){
+    localStorage.setItem('hard','0');
+    highScoreHard = '0';
+}
+highScoreEasy = parseInt(highScoreEasy);
+highScoreMedium = parseInt(highScoreMedium);
+highScoreHard = parseInt(highScoreHard);
 
 main.addEventListener('mousemove',(e)=>{
     // coordinates of mouse pointer.
@@ -30,6 +67,7 @@ main.addEventListener('mousemove',(e)=>{
 });
 
 // constructor for generating bullet.
+let bulletPath = './images/bullet2.png';
 function bullet(angle, velocity){
     this.angle = angle; // angle at which we have to fire.
     // intitally it's coordinates will be origin.
@@ -39,7 +77,7 @@ function bullet(angle, velocity){
     this.size = 30;
     this.draw = function () { // draw the bullet.
         let bullet = new Image();
-        bullet.src = './images/bullet2.png'
+        bullet.src = bulletPath;
         ctx.drawImage(bullet,this.x-this.size/2,this.y-this.size/2,this.size,this.size);
     }
     this.update = function () { // update bullet's position acording to it's velocity
@@ -56,7 +94,10 @@ let bullets = []; // to store bullets.
 main.addEventListener('click',()=>{ // to generate new bullet
     let blt = new bullet(angle,20);
     bullets.push(blt);
-    // fireSound.cloneNode(true).play();
+    console.log(page.style.display)
+    if(page.style.display == "none"){
+        fireAudio.cloneNode(true).play();
+    }
 });
 
 // generate random position of astroid.
@@ -109,9 +150,10 @@ function astroid(velocity){
 }
 let astroids = []; // it will store astroid.
 let timeOut = 1000; // time period in ms after that new astroid will be generated
+let reducer = 2; // reduce timeout by this value.
 function generateAstroids() {
     astroids.push(new astroid(1)); // add new astroid into astroids array.
-    timeOut -= 2; // reduce time out to increase difficulty.
+    timeOut -= reducer; // reduce time out to increase difficulty.
 
     let interval = setTimeout(() => {
         generateAstroids();
@@ -133,15 +175,20 @@ function isCollision(astroid,bullet) {
     return distance <= Math.pow(astroid.size/2 + bullet.size/2,2);
 }
 
+function drawEarthWeapon(angle) {
+    // draw earth image.
+    ctx.drawImage(earth,x1-earthSize/2,y1-earthSize/2,earthSize,earthSize); 
+    
+    // draw weapon image
+    ctx.save();
+    ctx.translate(c.width/2,c.height/2);
+    ctx.rotate(-angle);
+    ctx.drawImage(weapon,90-weapon.width/2,-weapon.width/2);
+    ctx.restore();
+}
 function animate() { // it will create animations for every element.
     animationRequest = requestAnimationFrame(animate); // for animation
     ctx.clearRect(0, 0, c.width, c.height);
-    
-    let earth = new Image();
-    earth.src = './images/earth.png';
-    let earthSize = 130;
-    let weapon = new Image();
-    weapon.src = './images/weapon.png'
     
     // update astroid at every frame 
     for(let i = 0; i < astroids.length; i++){
@@ -168,9 +215,24 @@ function animate() { // it will create animations for every element.
                 blastImg.style.left = astroids[i].x-astroids[i].size/2 + "px";
                 blastImg.style.height = astroids[i].size + "px";
                 blastImg.style.display = "block";
+                blastAudio.cloneNode(true).play();
                 setTimeout(() => {
                     blastImg.style.display = "none";
                 }, 200);
+
+                // update score
+                currentScore++;
+                scoreDisplay.innerHTML = currentScore;
+                if(reducer == 2){
+                    highScoreEasy = Math.max(highScoreEasy,currentScore);
+                    localStorage.setItem('easy',highScoreEasy.toString());
+                }else if(reducer == 5){
+                    highScoreMedium = Math.max(highScoreMedium,currentScore);
+                    localStorage.setItem('medium',highScoreMedium.toString());
+                }else{
+                    highScoreHard = Math.max(highScoreMedium,currentScore);
+                    localStorage.setItem('hard',highScoreHard.toString());
+                }
                 
                 // remove current bullet and astroid form arrays.
                 astroids.splice(i,1);
@@ -183,24 +245,54 @@ function animate() { // it will create animations for every element.
             i--;
             continue;
         }
-
+        
         // to detect collision between current astroid and earth.
         let distanceFromEarth = Math.pow((astroids[i].y-y1),2)+Math.pow((astroids[i].x-x1),2);
         // if there is collision then it is GAME OVER.
         if(distanceFromEarth <= Math.pow(astroids[i].size/2 + earthSize/2,2)){            
             // Game Is Over so cancel the animation.
             cancelAnimationFrame(animationRequest);
+            gameOver.children[0].innerHTML = 'Current Score : ' + currentScore;
+            if(reducer == 2){
+                gameOver.children[1].innerHTML = 'Highest Score : ' + highScoreEasy;
+            }else if(reducer == 5){
+                gameOver.children[1].innerHTML = 'Highest Score : ' + highScoreMedium;
+            }else{
+                gameOver.children[1].innerHTML = 'Highest Score : ' + highScoreHard;
+            }
+            
+            gameOver.style.display = "block";
+            resetButton.style.display = "block";
+            page.style.display = "block";
         }
     }
     
-    // draw earth image.
-    ctx.drawImage(earth,x1-earthSize/2,y1-earthSize/2,earthSize,earthSize); 
-    
-    // draw weapon image
-    ctx.save();
-    ctx.translate(c.width/2,c.height/2);
-    ctx.rotate(-angle);
-    ctx.drawImage(weapon,90-weapon.width/2,-weapon.width/2);
-    ctx.restore();
+    drawEarthWeapon(angle);
 }
-animate();
+function init() {
+    bullets = [];
+    astroids = [];
+    timeOut = 1000;
+    bulletPath = './images/' + document.querySelector('input[name="bullets"]:checked').value + '.png';
+    reducer = document.querySelector('input[name="levels"]:checked').value;
+    currentScore = 0;
+    scoreDisplay.innerHTML = currentScore;
+    page.style.display = "none";
+    animate();
+}
+// it will reset score in local storage.
+function resetHighScore() {
+    if(reducer == 2){
+        localStorage.setItem('easy','0');
+        highScoreEasy = 0;
+        gameOver.children[1].innerHTML = 'Highest Score : ' + highScoreEasy;
+    }else if(reducer == 5){
+        localStorage.setItem('medium','0');
+        highScoreMedium = 0;
+        gameOver.children[1].innerHTML = 'Highest Score : ' + highScoreMedium;
+    }else{
+        localStorage.setItem('hard','0');
+        highScoreHard = 0;
+        gameOver.children[1].innerHTML = 'Highest Score : ' + highScoreHard;
+    }
+}
